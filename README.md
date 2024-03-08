@@ -3,4 +3,4 @@
 ![screenshot](./src/assets/screenshot.png)
 
 
-## Visit live page here.
+#### Fun react application that builds custom memes.
