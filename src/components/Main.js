@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../App.css'
-import { memesData } from '../data/memesData';
 import InputField from '../fields/InputField';
 
 const MemeBody = () => {
-    const [allMemes, setAllMemes] = useState(memesData);
+    const [allMemes, setAllMemes] = useState([]);
     
     const [meme, setMeme ] = useState({
         topText: '',
@@ -12,11 +11,18 @@ const MemeBody = () => {
         name: '',
         url: 'https://i.imgflip.com/3si4.jpg'
     });
+
+    useEffect(() => {
+        fetch('https://api.imgflip.com/get_memes')
+        .then(response => response.json())
+        .then(data => setAllMemes(data))
+        .catch(error => console.log('Error fetching memes: ', error));
+    }, [allMemes])
    
     const handleSubmit = (e) => {
         e.preventDefault();
         
-        const randomIndex = Math.floor(Math.random() * memesData.data.memes.length);
+        const randomIndex = Math.floor(Math.random() * allMemes.data.memes.length);
         
         if (allMemes.success) {
             setMeme(prevMeme => {
